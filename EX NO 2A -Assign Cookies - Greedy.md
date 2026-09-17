@@ -1,94 +1,66 @@
 
-# EX 2B Jump Game using Greedy Algorithm.
+# EX 2A Assign Cookies using Greedy Algorithm. 
 ## DATE:
 ## AIM:
-To write a Java program to for given constraints.
-You are given an array of integers. Each number represents the maximum number of steps you can jump forward from that position.
+To Write a Java program for the following Constraints.
+Assume you are an awesome parent and want to give your children some cookies. But, you should give each child at most one cookie.
 
-You start from the first element (index 0). 
-Write a program to find the minimum number of jumps required to reach the last index of the array.
+Each child i has a greed factor g[i], which is the minimum size of a cookie that the child will be content with; and each cookie j has a size s[j]. If s[j] >= g[i], we can assign the cookie j to the child i, and the child i will be content. Your goal is to maximise the number of your content children and output the maximum number.
 
-If it is not possible to reach the end, return -1.
 ## Algorithm
 1.Start the program.
-Read the size of the array n and input the array elements nums[], where each element represents the maximum jump length from that position.
+ Read the number of children n and their greed factors array g[], then read the number of cookies m and their sizes array s[].
 
-2.Handle base cases:
+2.Sort both arrays — g[] (children’s greed) and s[] (cookie sizes) in ascending order.
 
-If n <= 1, return 0 (already at the end).
+3.Initialize two pointers:
+i = 0 (for children) and j = 0 (for cookies).
 
-If nums[0] == 0, return -1 (cannot move forward).
+4.Iterate while both pointers are valid:
 
-3.Initialize variables:
+If the current cookie s[j] can satisfy the current child’s greed g[i] (s[j] >= g[i]), assign the cookie and move to the next child (i++).
 
-jumps = 0 → counts total jumps
-
-currentReach = 0 → current range reachable with current jump
-
-maxReach = 0 → farthest position reachable at any time
-
-4.Iterate through the array (from index 0 to n-2):
-
-Update maxReach = max(maxReach, i + nums[i]).
-
-If i == currentReach, increment jumps and set currentReach = maxReach.
-
-If currentReach >= n - 1, stop and return jumps.
-
-If currentReach == i, return -1 (stuck, can’t progress).
+Move to the next cookie (j++) in all cases.
 
 5.Display the result:
-Print the minimum number of jumps to reach the last index (or -1 if unreachable) and stop the program.
+Print the total number of content (satisfied) children i and stop the program.
+
 ## Program:
 ```
-import java.util.Scanner;
 
-public class MinJumpToEnd {
+import java.util.*;
 
-    // Function to return minimum jumps to reach end
-    public static int minimumJumps(int[] nums) {
-        // Type Your Code Here.
-        int n=nums.length;
-        if(n<=1) return 0;
-        if(nums[0]==0)return -1;
-        int jumps=0;
-        int currentReach=0;
-        int maxReach=0;
-        for(int i=0;i<n-1;i++){
-            maxReach=Math.max(maxReach,i+nums[i]);
-            if(i==currentReach){
-                jumps++;
-                currentReach=maxReach;
-                if(currentReach>=n-1)
-                return jumps;
-                if(currentReach==i)
-                return -1;
-            }
+public class AssignCookies {
+    
+    public static int findContentChildren(int[] g, int[] s) {
+        // Type Your Logic Here.
+        Arrays.sort(g);
+        Arrays.sort(s);
+        int i=0,j=0;
+        while(i<g.length && j<s.length){
+            if(s[j]>=g[i])i++;
+            j++;
         }
-        return -1;
+        return i;
     }
 
-    // Main method to handle input and output
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt(); // Number of elements
-        int[] nums = new int[n];
-
-        for (int i = 0; i < n; i++) {
-            nums[i] = sc.nextInt();
-        }
-
-        System.out.println("Minimum jumps to reach last index: " + minimumJumps(nums));
+        int n = sc.nextInt();
+        int[] g = new int[n];
+        for (int i = 0; i < n; i++) g[i] = sc.nextInt();
+        int m = sc.nextInt();
+        int[] s = new int[m];
+        for (int i = 0; i < m; i++) s[i] = sc.nextInt();
+        System.out.println(findContentChildren(g, s));
     }
 }
-
 
 ```
 
 ## Output:
-
-<img width="844" height="267" alt="image" src="https://github.com/user-attachments/assets/13f408c7-a63d-4930-a2b9-fe0e8ba9ac56" />
+<img width="322" height="331" alt="image" src="https://github.com/user-attachments/assets/1325c7dd-56c4-41ec-af92-028b3eb3df0c" />
 
 
 ## Result:
-The program successfully implemented and the expected output is verified.
+The program successfully print all the numbers from 1 to N. 
